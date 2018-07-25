@@ -11,8 +11,11 @@ from __future__ import print_function
 import argparse
 import logging
 
+import readchar
+
 import conf
 from vocab.wordbook import WordBook
+from player.listplayer import ListPlayer
 
 
 LOG_FILE = conf.LOG_PATH + 'lmf.log'
@@ -29,9 +32,8 @@ def main(reload):
     print(wordbook.wordlists)
     print(wordbook.wordlist_dict['list01'].name)
     print(wordbook.wordlist_dict['list01'].words)
-    wordbook.wordlist_dict['list01'].word_dict['hodgepodge'].show()
-    wordbook.wordlist_dict['list01'].word_dict['endemic'].show()
-    wordbook.wordlist_dict['list01'].word_dict['intermediary'].show()
+    player = ListPlayer(wordbook.wordlist_dict['list01'])
+    player.play()
 
 
 
