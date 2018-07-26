@@ -1,4 +1,6 @@
 *.pyc
 
+.DS_Store
+
 log/*
 vocab/.auto_dump/*
