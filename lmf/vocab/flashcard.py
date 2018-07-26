@@ -6,8 +6,6 @@
     Date        : Jul 25, 2018
 """
 
-from __future__ import print_function
-
 from termcolor import colored
 
 
@@ -48,16 +46,16 @@ class Flashcard(object):
         # maybe more than one definition
         self.definitions = map(Definition, word_strs[2:])
 
-    def show_base(self):
-        print('')
-        print(colored(self.word, 'red'))
-        print(self.phonogram)
+    def show_base(self, screen_show):
+        screen_show(colored(self.word, 'red'))
+        screen_show(self.phonogram)
+        screen_show('')
 
-    def show_definition(self):
+    def show_definition(self, screen_show):
         for definition in self.definitions:
-            print(definition.to_show())
+            screen_show(definition.to_show())
 
-    def show(self):
-        self.show_base()
-        self.show_definition()
+    def show(self, screen_show):
+        self.show_base(screen_show)
+        self.show_definition(screen_show)
 

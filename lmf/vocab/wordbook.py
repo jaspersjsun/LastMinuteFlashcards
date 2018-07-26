@@ -6,8 +6,6 @@
     Date        : Jul 25, 2018
 """
 
-from __future__ import print_function
-
 import os
 import shutil
 import codecs

@@ -16,6 +16,7 @@ import readchar
 import conf
 from vocab.wordbook import WordBook
 from player.listplayer import ListPlayer
+from window.mainwindow import MainWindow
 
 
 LOG_FILE = conf.LOG_PATH + 'lmf.log'
@@ -26,14 +27,17 @@ SELECTED_BOOK = conf.SELECTED_BOOK
 
 
 def main(reload):
+    main_window = MainWindow()
+
     wordbook = WordBook(BOOK_HOME, DUMP_HOME, SELECTED_BOOK)
     if reload:
         wordbook.reload_workbook()
-    print(wordbook.wordlists)
-    print(wordbook.wordlist_dict['list01'].name)
-    print(wordbook.wordlist_dict['list01'].words)
-    player = ListPlayer(wordbook.wordlist_dict['list01'])
+    #print(wordbook.wordlists)
+    #print(wordbook.wordlist_dict['list01'].name)
+    #print(wordbook.wordlist_dict['list01'].words)
+    player = ListPlayer(wordbook.wordlist_dict['list01'], main_window)
     player.play()
+    main_window.close()
 
 
 

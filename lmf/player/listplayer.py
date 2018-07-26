@@ -39,9 +39,12 @@ COMMANDS = {    # Key-command mapping
 
 class ListPlayer(object):
 
-    def __init__(self, wordlist):
+    def __init__(self, wordlist, window):
         self.wordlist = wordlist
         self.word_dict = wordlist.word_dict
+        self.window = window
+        self.screen_show = self.window.screen_show
+        self.new_page = self.window.new_page
 
     def reset_word_idx(self):
         self.word_idx = -1
@@ -51,16 +54,17 @@ class ListPlayer(object):
         if self.header:
             self.header = False
             flashcard = self.word_dict[self.words[self.word_idx]]
-            flashcard.show_definition()
+            flashcard.show_definition(self.screen_show)
             return
         if self.word_idx + 1 < self.word_num:
             self.word_idx += 1
             flashcard = self.word_dict[self.words[self.word_idx]]
+            self.new_page()
             if self.test_mode:
-                flashcard.show_base()
+                flashcard.show_base(self.screen_show)
                 self.header = True
             else:
-                flashcard.show()
+                flashcard.show(self.screen_show)
         else:
             logging.info("already reach the tail")
 
@@ -83,6 +87,11 @@ class ListPlayer(object):
         self.reset_word_idx()
         self.next()
 
+    def abort(self):
+        self.window.close()
+        logging.info("aborted")
+        raise KeyboardInterrupt
+
     def play(self, test_mode=True, shuffle=False):
         self.test_mode = test_mode
         self.shuffle = shuffle
@@ -96,8 +105,7 @@ class ListPlayer(object):
             # else
             cmd = COMMANDS[pressed_key]
             if cmd == 'ABORT':
-                logging.info("aborted")
-                raise KeyboardInterrupt
+                self.abort()
             elif cmd == 'QUIT':
                 logging.info("quit current play")
                 break
