@@ -12,7 +12,7 @@ import os
 import argparse
 
 
-LOG_PATH = '/Users/didi/GRE/LastMinuteFlashcards/log/'
+LOG_PATH = '../log/'
 LOG_FORMAT = '%(filename)s [%(asctime)s] [%(levelname)s] %(message)s'
 
 BOOK_HOME = '../vocab'      # directory to store all the books
