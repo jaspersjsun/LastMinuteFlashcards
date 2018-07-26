@@ -13,6 +13,7 @@ import logging
 import random
 
 import readchar
+from termcolor import colored
 
 
 POS_TAGS = [    # Part-Of-Speech tags
@@ -58,6 +59,12 @@ class ListPlayer(object):
         self.screen_show("|    %s - %s - %s    %s %6.2f%%    |" % (self.wordlist.name,
                 self.get_order(), self.get_mode(), progress_bar, progress))
         self.screen_show('|' + '-' * (58 + len(self.wordlist.name)) + '|')
+        self.screen_show('')
+        #self.screen_show(colored("<tips>  'n': next, 'q': previous, 'r': restart, 'q': quit", 'cyan'))
+        #self.screen_show(colored("        't': toggle mode (scan, test)", 'cyan'))
+        #self.screen_show(colored("        's': toggle order (random, normal)", 'cyan'))
+        self.screen_show(colored("<tips>  'n': next, 'p': previous, 't': toggle mode <scan/test>", 'cyan'))
+        self.screen_show(colored("        'r': restart, 'q': quit, 's': toggle order <random/normal>", 'cyan'))
         self.screen_show('')
 
     def new_page(self):
