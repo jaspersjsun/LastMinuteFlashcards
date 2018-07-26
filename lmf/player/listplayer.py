@@ -7,6 +7,7 @@
 """
 
 from __future__ import print_function
+from __future__ import division
 
 import logging
 import random
@@ -44,18 +45,46 @@ class ListPlayer(object):
         self.word_dict = wordlist.word_dict
         self.window = window
         self.screen_show = self.window.screen_show
-        self.new_page = self.window.new_page
+
+    def get_mode(self):
+        return 'test' if self.test_mode else 'scan'
+
+    def get_order(self):
+        return 'random' if self.shuffle else 'normal'
+
+    def draw_status_bar(self):
+        progress = (self.word_idx + 1) * 100 / self.word_num
+        progress_bar = "[%-20s]" % ('=' * int(progress / 5) + '>')[-20:]
+        self.screen_show("|    %s - %s - %s    %s %6.2f%%    |" % (self.wordlist.name,
+                self.get_order(), self.get_mode(), progress_bar, progress))
+        self.screen_show('|' + '-' * (58 + len(self.wordlist.name)) + '|')
+        self.screen_show('')
+
+    def new_page(self):
+        self.window.new_page()
+        self.draw_status_bar()
+
+    def refresh_page(self):
+        self.new_page()
+        flashcard = self.word_dict[self.words[self.word_idx]]
+        if self.test_mode and self.header:
+            flashcard.show_base(self.screen_show)
+        else:
+            flashcard.show(self.screen_show)
 
     def reset_word_idx(self):
         self.word_idx = -1
         self.header = False
 
     def next(self):
+        # show the definition in test mode
         if self.header:
             self.header = False
             flashcard = self.word_dict[self.words[self.word_idx]]
             flashcard.show_definition(self.screen_show)
             return
+
+        # next word
         if self.word_idx + 1 < self.word_num:
             self.word_idx += 1
             flashcard = self.word_dict[self.words[self.word_idx]]
@@ -71,20 +100,18 @@ class ListPlayer(object):
     def previous(self):
         if self.word_idx <= 0:
             logging.info("already reach the head")
-            return
         else:
             self.word_idx -= 2
             self.header = False
             self.next()
 
     def start(self):
-        print('\n\n--------------- %s : %s ---------------' % (
-                self.wordlist.name, 'random' if self.shuffle else 'normal'))
         self.words = list(self.wordlist.words)
         if self.shuffle:
             random.shuffle(self.words)
         self.word_num = len(self.words)
         self.reset_word_idx()
+        logging.info("start from begining")
         self.next()
 
     def abort(self):
@@ -104,32 +131,33 @@ class ListPlayer(object):
                 continue
             # else
             cmd = COMMANDS[pressed_key]
+
             if cmd == 'ABORT':
                 self.abort()
+
             elif cmd == 'QUIT':
                 logging.info("quit current play")
                 break
+
             elif cmd == 'PREVIOUS':
                 self.previous()
+
             elif cmd == 'NEXT':
                 self.next()
+
             elif cmd == 'REPEAT':
-                logging.info("start from begining again")
+                self.start()
+
             elif cmd == 'TEST':
-                if self.test_mode:
-                    self.test_mode = False
-                    logging.info("test mode: turn off")
-                    if self.header:
-                        self.next()
-                else:
-                    self.test_mode = True
-                    logging.info("test mode: turn on")
+                self.test_mode = not self.test_mode
+                if self.test_mode and self.header:
+                    self.next()
+                logging.info("mode: %s" % self.get_mode())
+                self.refresh_page()
+
             elif cmd == 'SHUFFLE':
                 self.shuffle = not self.shuffle
-                if self.shuffle:
-                    logging.info("word order: random")
-                else:
-                    logging.info("word order: normal")
+                logging.info("word order: %s" % self.get_order())
                 self.start()
 
 
