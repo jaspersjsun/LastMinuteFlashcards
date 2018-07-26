@@ -64,7 +64,6 @@ class LastMinuteFlashcards(object):
 
     def draw_main_page(self):
         self.mainwin.new_page()
-        self.mainwin.screen_show(self.wordbook.wordlists)
         self.mainwin.screen_show(colored(">>>>>> %s <<<<<<" % self.wordbook.book_name,
                 'magenta', attrs=['bold']))
         self.mainwin.screen_show("\nAvaliable wordlists:")
