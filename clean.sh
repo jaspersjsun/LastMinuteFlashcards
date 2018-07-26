@@ -6,6 +6,8 @@
 # Date          : Jul 25, 2018
 #=============================================
 
+reset
+
 # clean pyc files
 find . -name '*.pyc' -type f -delete
 

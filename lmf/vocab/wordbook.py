@@ -22,6 +22,8 @@ BOOK_STRUCTURE_FNAME = 'book_structure.txt'
 
 # get last modified time of file
 get_file_mtime = lambda x: os.stat(x).st_mtime
+def not_modified(old_fname, new_fname):
+    return get_file_mtime(old_fname) < get_file_mtime(new_fname)
 
 
 class WordBook(object):
@@ -44,8 +46,8 @@ class WordBook(object):
         self.wordlist_dict = dict()
         # using book-structure to load wordlists
         with codecs.open(os.path.join(self.book_dir, BOOK_STRUCTURE_FNAME), 'r', 'utf-8') as fin:
-            self.structure = dict(map(lambda x: x.strip().split(' '), fin.readlines()))
-        for name, fname in self.structure.iteritems():
+            structures = map(lambda x: x.strip().split(' '), fin.readlines())
+        for name, fname in structures:
             self.wordlists.append(name)
             self.wordlist_dict[name] = self.load_wordlist(name, fname)
 
@@ -54,14 +56,13 @@ class WordBook(object):
         else:
             logging.info("[loaded] WordBook '%s'" % self.book_name)
 
-    def reload_workbook(self):
+    def reload_wordbook(self):
         self.load_wordbook(reload=True)
 
     def load_wordlist(self, name, fname):
         wordlist_fname = os.path.join(self.book_dir, fname)
         dump_fname = os.path.join(self.dump_dir, fname + DUMP_SUFFIX)
-        if os.path.exists(dump_fname) and \
-                get_file_mtime(dump_fname) > get_file_mtime(wordlist_fname):
+        if os.path.exists(dump_fname) and not_modified(wordlist_fname, dump_fname):
             # load from cache
             with open(dump_fname, 'rb') as pickle_file:
                 wordlist = pickle.load(pickle_file)
