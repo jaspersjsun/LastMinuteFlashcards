@@ -8,7 +8,7 @@
 
 import codecs
 
-from flashcard import Flashcard
+from .flashcard import Flashcard
 
 
 class WordList(object):

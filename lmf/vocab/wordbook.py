@@ -9,11 +9,10 @@
 import os
 import shutil
 import codecs
-import cPickle as pickle
+from six.moves import cPickle as pickle
 import logging
 
-from flashcard import Flashcard
-from wordlist import WordList
+from .wordlist import WordList
 
 
 DUMP_SUFFIX = '.dump'
