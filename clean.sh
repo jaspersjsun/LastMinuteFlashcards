@@ -10,6 +10,7 @@ reset
 
 # clean pyc files
 find . -name '*.pyc' -type f -delete
+find . -name '__pycache__' -type d -delete
 
 # clean book caches
 pushd ./lmf

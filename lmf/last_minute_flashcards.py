@@ -8,6 +8,7 @@
 
 from __future__ import print_function
 
+import sys
 import argparse
 import logging
 
@@ -127,6 +128,12 @@ def main(reload):
 
 
 if __name__ == '__main__':
+    # check the encoding for unicode support
+    if sys.stdout.encoding != 'UTF-8':
+        print("Encoding not satisfied, please run 'export PYTHONIOENCODING=UTF-8' "
+                "before running this python script")
+        exit(1)
+
     parser = argparse.ArgumentParser()
     parser.add_argument("-r", "--reload", help="reload the vocabulary", action="store_true")
     args = parser.parse_args()
