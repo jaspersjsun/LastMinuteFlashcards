@@ -52,10 +52,11 @@ COMMANDS = {    # Key-command mapping
 
 class LastMinuteFlashcards(object):
 
-    def __init__(self):
+    def __init__(self, test_mode):
         self.mainwin = MainWindow()
         self.wordbook = WordBook(BOOK_HOME, DUMP_HOME, SELECTED_BOOK)
         self.selected_list_idx = 0
+        self.test_mode = test_mode
 
     def reload_wordbook(self):
         self.wordbook.reload_wordbook()
@@ -87,6 +88,11 @@ class LastMinuteFlashcards(object):
     def run(self):
         while True:
             self.draw_main_page()
+            if self.test_mode:
+                self.mainwin.close()
+                logging.info("Test finished. Bye bye")
+                break
+
             pressed_key = readchar.readkey()
             if pressed_key not in COMMANDS:
                 logging.warn("key '%s' can not be recognized" % repr(pressed_key))
@@ -120,8 +126,8 @@ class LastMinuteFlashcards(object):
                 self.draw_main_page()
 
 
-def main(reload):
-    lmf = LastMinuteFlashcards()
+def main(reload, test_mode):
+    lmf = LastMinuteFlashcards(test_mode)
     if reload:
         lmf.reload_wordbook()
     lmf.run()
@@ -136,9 +142,10 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-r", "--reload", help="reload the vocabulary", action="store_true")
+    parser.add_argument("-t", "--test", help="test the set up", action="store_true")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, filename=LOG_FILE, format=LOG_FORMAT)
     logging.warning("\n\n-------------------- start -----------------------\n")
 
-    main(args.reload)
+    main(args.reload, args.test)

@@ -12,4 +12,4 @@ install:
     - bash setup.sh
 
 script:
-    - (cd lmf; python last_minute_flashcards.py)
+    - (cd lmf; python last_minute_flashcards.py --test)
