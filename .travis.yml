@@ -1,0 +1,15 @@
+language: python
+python:
+    - "2.7"
+    - "3.4"
+    - "3.5"
+    - "3.6"
+
+env:
+    PYTHONIOENCODING=UTF-8
+
+install:
+    - bash setup.sh
+
+script:
+    - (cd lmf; python last_minute_flashcards.py)
