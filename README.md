@@ -1,5 +1,7 @@
 # LMF: Last Minute Flashcards for GRE Vocabulary
 
+[![Build Status](https://travis-ci.org/FakeCola/LastMinuteFlashcards.svg?branch=master)](https://travis-ci.org/FakeCola/LastMinuteFlashcards)
+
 A command-line tool to learn GRE words with flashcards.
 
 You can efficiently use fragmented working time to learn words with LMF:
