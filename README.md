@@ -11,13 +11,18 @@ You can efficiently use fragmented working time to learn words with LMF:
 - **Mini**: Take tiny space, you can monitor the progress of running program simultaneously.
 
 
+The code is tested against Python 2.7, 3.4, 3.5, 3.6 and 3.7.
+
+
 ## Set Up
 
+Install dependencies:
+
 ```sh
-$ bash ./setup.sh
+$ pip install -r requirements.txt
 ```
 
-If you meet an encoding problem (encoding for stdout is not 'UTF-8'), please set the `PYTHONIOENCODING` environment variable by running the following line in your console:
+If you met the encoding problem (encoding for stdout is not 'UTF-8'), please set the `PYTHONIOENCODING` environment variable by running the following line in your console:
 
 ```sh
 export PYTHONIOENCODING=UTF-8

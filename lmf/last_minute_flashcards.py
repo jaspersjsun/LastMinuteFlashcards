@@ -8,6 +8,7 @@
 
 from __future__ import print_function
 
+import os
 import sys
 import argparse
 import logging
@@ -145,7 +146,11 @@ if __name__ == '__main__':
     parser.add_argument("-t", "--test", help="test the set up", action="store_true")
     args = parser.parse_args()
 
+    # configurate the logging
+    log_dir = os.path.dirname(LOG_FILE)
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
     logging.basicConfig(level=logging.INFO, filename=LOG_FILE, format=LOG_FORMAT)
-    logging.warning("\n\n-------------------- start -----------------------\n")
+    logging.info("\n\n-------------------- start -----------------------\n")
 
     main(args.reload, args.test)

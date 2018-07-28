@@ -4,12 +4,13 @@ python:
     - "3.4"
     - "3.5"
     - "3.6"
+    - "3.7"
 
 env:
     PYTHONIOENCODING=UTF-8
 
 install:
-    - bash setup.sh
+    - pip install -r requirements.txt
 
 script:
     - (cd lmf; python last_minute_flashcards.py --test)
