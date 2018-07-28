@@ -10,8 +10,9 @@ You can efficiently use fragmented working time to learn words with LMF:
 - **Quick launch**: Take use of every minute when you are training models, processing data, etc.
 - **Mini**: Take tiny space, you can monitor the progress of running program simultaneously.
 
+<br>
 
-The code is tested against Python 2.7, 3.4, 3.5, 3.6 and 3.7.
+The code is tested against Python 2.7, 3.4, 3.5 and 3.6.
 
 
 ## Set Up
