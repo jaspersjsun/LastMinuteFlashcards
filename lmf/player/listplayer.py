@@ -19,6 +19,7 @@ from termcolor import colored
 POS_TAGS = [    # Part-Of-Speech tags
         'n',
         'adj',
+        'adv',
         'v',
 ]
 
@@ -29,10 +30,16 @@ COMMANDS = {    # Key-command mapping
     'q': 'QUIT',
     '\x1b\x1b': 'QUIT',     # ESC (twice)
     'j': 'PREVIOUS',
+    'h': 'PREVIOUS',
     'p': 'PREVIOUS',
+    '\x1b[D': 'PREVIOUS',   # left arrow
+    '\x1b[A': 'PREVIOUS',   # up arrow
     'k': 'NEXT',
+    'l': 'NEXT',
     ' ': 'NEXT',
     'n': 'NEXT',
+    '\x1b[C': 'NEXT',   # right arrow
+    '\x1b[B': 'NEXT',   # down arrow
     'r': 'REPEAT',
     't': 'TEST',        # Toggle: test mode
     's': 'SHUFFLE'      # Toggle: shuffle the order
@@ -157,6 +164,7 @@ class ListPlayer(object):
 
             elif cmd == 'TEST':
                 self.test_mode = not self.test_mode
+                self.header = False
                 if self.test_mode and self.header:
                     self.next()
                 logging.info("mode: %s" % self.get_mode())
