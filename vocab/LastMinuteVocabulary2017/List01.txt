@@ -203,7 +203,7 @@ egotism
 /ˈigoʊˌtɪzəm/
 n. an inflated sense of one’s own importance
 
-unquali ed
+unqualified
 /ʌnˈkwɔləˌfaɪd/
 adj. complete or total
 adj. not having the skills, knowledge, or experience needed to do a particular job or activity
@@ -385,13 +385,13 @@ caterwaul
 v. to make a very loud and unpleasant sound
 v. to protest or complain noisily
 
-ef cacious
+efficacious
 /ˌɛfɪˈkeɪʃəs/
 adj. having the power to produce a desired result or effect
 
 alienate
 /ˈeɪljənˌeɪt/
-to cause (someone) to feel that she or he no longer belongs in a particular group, society, etc.
+v. to cause (someone) to feel that she or he no longer belongs in a particular group, society, etc.
 v. to cause (someone) to stop being friendly, helpful, etc., towards you
 
 analgesic
@@ -414,8 +414,7 @@ v. to think deeply or carefully about
 
 dogmatic
 /dɔgˈmætɪk/
-adj. expressing personal opinions or beliefs as if they are certainly
-correct and cannot be doubted
+adj. expressing personal opinions or beliefs as if they are certainly correct and cannot be doubted
 
 concrete
 /ˈkɑnˌkrit/
