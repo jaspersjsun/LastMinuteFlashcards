@@ -79,6 +79,7 @@ class LastMinuteFlashcards(object):
                         colored(listname, 'green', attrs=['bold']))
         self.mainwin.screen_show(colored("\nPress 'j', 'k' to select list", 'cyan'))
         self.mainwin.screen_show(colored("Press 'y' to confirm", 'cyan'))
+        self.mainwin.screen_show(colored("Press 'r' to reload the list", 'cyan'))
         self.mainwin.screen_show(colored("Press 'q' to quit", 'cyan'))
 
     def learn_wordlist(self):
