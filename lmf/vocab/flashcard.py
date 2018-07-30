@@ -31,7 +31,7 @@ class Definition(object):
         # English definition
         self.eng_def = '. '.join(fields[len(pos_tags):])
         # POS tags
-        self.pos_tags = map(lambda x: x+'.', pos_tags)
+        self.pos_tags = list(map(lambda x: x+'.', pos_tags))
 
     def to_show(self):
         pos_str = '/'.join(map(lambda x: colored(x, 'green'), self.pos_tags))
@@ -44,7 +44,7 @@ class Flashcard(object):
         self.word = word_strs[0]
         self.phonogram = word_strs[1]
         # maybe more than one definition
-        self.definitions = map(Definition, word_strs[2:])
+        self.definitions = list(map(Definition, word_strs[2:]))
 
     def show_base(self, screen_show):
         screen_show(colored(self.word, 'red'))

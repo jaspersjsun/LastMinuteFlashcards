@@ -165,8 +165,6 @@ class ListPlayer(object):
             elif cmd == 'TEST':
                 self.test_mode = not self.test_mode
                 self.header = False
-                if self.test_mode and self.header:
-                    self.next()
                 logging.info("mode: %s" % self.get_mode())
                 self.refresh_page()
 

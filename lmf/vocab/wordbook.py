@@ -45,7 +45,7 @@ class WordBook(object):
         self.wordlist_dict = dict()
         # using book-structure to load wordlists
         with codecs.open(os.path.join(self.book_dir, BOOK_STRUCTURE_FNAME), 'r', 'utf-8') as fin:
-            structures = map(lambda x: x.strip().split(' '), fin.readlines())
+            structures = list(map(lambda x: x.strip().split(' '), fin.readlines()))
         for name, fname in structures:
             self.wordlists.append(name)
             self.wordlist_dict[name] = self.load_wordlist(name, fname)
