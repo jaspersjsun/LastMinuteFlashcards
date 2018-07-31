@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-    Description : Test script for development
+    Description : Main program
     Author      : FakeCola
     Date        : Jul 25, 2018
 """
@@ -29,10 +29,11 @@ DUMP_HOME = conf.DUMP_HOME
 SELECTED_BOOK = conf.SELECTED_BOOK
 
 
-COMMANDS = {    # Key-command mapping
-    '\x1a': 'ABORT',    # Ctrl-z
-    '\x03': 'ABORT',    # Ctrl-c
-    '\x04': 'ABORT',    # Ctrl-d
+# Key-command mapping
+COMMANDS = {
+    '\x1a': 'ABORT',    # Ctrl+z
+    '\x03': 'ABORT',    # Ctrl+c
+    '\x04': 'ABORT',    # Ctrl+d
     'q': 'QUIT',
     '\x1b\x1b': 'QUIT',     # ESC Key (twice)
     'j': 'PREVIOUS',
@@ -51,6 +52,7 @@ COMMANDS = {    # Key-command mapping
     'r': 'RELOAD',
 }
 
+
 class LastMinuteFlashcards(object):
 
     def __init__(self, test_mode):
@@ -67,24 +69,29 @@ class LastMinuteFlashcards(object):
 
     def draw_main_page(self):
         self.mainwin.new_page()
-        self.mainwin.screen_show(colored(">>>>>> %s <<<<<<" % self.wordbook.book_name,
+        self.mainwin.screen_show(colored(
+                ">>>>>> %s <<<<<<" % self.wordbook.book_name,
                 'magenta', attrs=['bold']))
         self.mainwin.screen_show("\nAvaliable wordlists:")
         selected_wordlist_name = self.get_selected_wordlist_name()
         for listname in self.wordbook.wordlists:
-            if listname != self.get_selected_wordlist_name():
+            if listname != selected_wordlist_name:
                 self.mainwin.screen_show(colored('  * ', 'red') + listname)
             else:
-                self.mainwin.screen_show(colored(u'  \u2192 ', 'green') +
+                self.mainwin.screen_show(
+                        colored(u'  \u2192 ', 'green') +
                         colored(listname, 'green', attrs=['bold']))
-        self.mainwin.screen_show(colored("\nPress 'j', 'k' to select list", 'cyan'))
+        self.mainwin.screen_show(
+                colored("\nPress 'j', 'k' to select list", 'cyan'))
         self.mainwin.screen_show(colored("Press 'y' to confirm", 'cyan'))
-        self.mainwin.screen_show(colored("Press 'r' to reload the list", 'cyan'))
+        self.mainwin.screen_show(
+                colored("Press 'r' to reload the list", 'cyan'))
         self.mainwin.screen_show(colored("Press 'q' to quit", 'cyan'))
 
     def learn_wordlist(self):
         wordlist_name = self.get_selected_wordlist_name()
-        self.player = ListPlayer(self.wordbook.wordlist_dict[wordlist_name], self.mainwin)
+        self.player = ListPlayer(self.wordbook.wordlist_dict[wordlist_name],
+                                 self.mainwin)
         self.player.play()
 
     def run(self):
@@ -97,7 +104,8 @@ class LastMinuteFlashcards(object):
 
             pressed_key = readchar.readkey()
             if pressed_key not in COMMANDS:
-                logging.warn("key '%s' can not be recognized" % repr(pressed_key))
+                logging.warn("key '%s' can not be recognized" %
+                             repr(pressed_key))
                 continue
             # else
             cmd = COMMANDS[pressed_key]
@@ -112,11 +120,13 @@ class LastMinuteFlashcards(object):
                 break
 
             elif cmd == 'PREVIOUS':
-                self.selected_list_idx = (self.selected_list_idx - 1) % len(self.wordbook.wordlists)
+                self.selected_list_idx -= 1
+                self.selected_list_idx %= len(self.wordbook.wordlists)
                 self.draw_main_page()
 
             elif cmd == 'NEXT':
-                self.selected_list_idx = (self.selected_list_idx + 1) % len(self.wordbook.wordlists)
+                self.selected_list_idx += 1
+                self.selected_list_idx %= len(self.wordbook.wordlists)
                 self.draw_main_page()
 
             elif cmd == 'CONFIRM':
@@ -138,20 +148,23 @@ def main(reload, test_mode):
 if __name__ == '__main__':
     # check the encoding for unicode support
     if sys.stdout.encoding != 'UTF-8':
-        print("Encoding not satisfied, please run 'export PYTHONIOENCODING=UTF-8' "
-                "before running this python script")
+        print("Encoding not satisfied, please run 'export "
+              "PYTHONIOENCODING=UTF-8' before running this python script")
         exit(1)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-r", "--reload", help="reload the vocabulary", action="store_true")
-    parser.add_argument("-t", "--test", help="test the set up", action="store_true")
+    parser.add_argument("-r", "--reload", action="store_true",
+                        help="reload the vocabulary")
+    parser.add_argument("-t", "--test", action="store_true",
+                        help="test the set up")
     args = parser.parse_args()
 
     # configurate the logging
     log_dir = os.path.dirname(LOG_FILE)
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
-    logging.basicConfig(level=logging.INFO, filename=LOG_FILE, format=LOG_FORMAT)
+    logging.basicConfig(level=logging.INFO, filename=LOG_FILE,
+                        format=LOG_FORMAT)
     logging.info("\n\n-------------------- start -----------------------\n")
 
     main(args.reload, args.test)

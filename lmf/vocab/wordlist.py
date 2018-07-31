@@ -33,5 +33,3 @@ class WordList(object):
                 flashcard = Flashcard(word_strs)
                 self.words.append(flashcard.word)
                 self.word_dict[flashcard.word] = flashcard
-
-

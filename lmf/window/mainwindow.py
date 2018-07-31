@@ -31,4 +31,3 @@ class MainWindow(object):
     def close(self):
         curses.endwin()
         logging.info("main window destroyed")
-

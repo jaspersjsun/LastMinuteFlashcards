@@ -16,17 +16,11 @@ import readchar
 from termcolor import colored
 
 
-POS_TAGS = [    # Part-Of-Speech tags
-        'n',
-        'adj',
-        'adv',
-        'v',
-]
-
-COMMANDS = {    # Key-command mapping
-    '\x1a': 'ABORT',    # Ctrl-z
-    '\x03': 'ABORT',    # Ctrl-c
-    '\x04': 'ABORT',    # Ctrl-d
+# Key-command mapping
+COMMANDS = {
+    '\x1a': 'ABORT',    # Ctrl+z
+    '\x03': 'ABORT',    # Ctrl+c
+    '\x04': 'ABORT',    # Ctrl+d
     'q': 'QUIT',
     '\x1b\x1b': 'QUIT',     # ESC (twice)
     'j': 'PREVIOUS',
@@ -63,15 +57,17 @@ class ListPlayer(object):
     def draw_status_bar(self):
         progress = (self.word_idx + 1) * 100 / self.word_num
         progress_bar = "[%-20s]" % ('=' * int(progress / 5) + '>')[-20:]
-        self.screen_show("|    %s - %s - %s    %s %6.2f%%    |" % (self.wordlist.name,
-                self.get_order(), self.get_mode(), progress_bar, progress))
+        self.screen_show("|    %s - %s - %s    %s %6.2f%%    |" % (
+                self.wordlist.name, self.get_order(), self.get_mode(),
+                progress_bar, progress))
         self.screen_show('|' + '-' * (58 + len(self.wordlist.name)) + '|')
         self.screen_show('')
-        #self.screen_show(colored("<tips>  'n': next, 'q': previous, 'r': restart, 'q': quit", 'cyan'))
-        #self.screen_show(colored("        't': toggle mode (scan, test)", 'cyan'))
-        #self.screen_show(colored("        's': toggle order (random, normal)", 'cyan'))
-        self.screen_show(colored("<tips>  'n': next, 'p': previous, 't': toggle mode <scan/test>", 'cyan'))
-        self.screen_show(colored("        'r': restart, 'q': quit, 's': toggle order <random/normal>", 'cyan'))
+        self.screen_show(colored(
+                "<tips>  'n': next, 'p': previous, "
+                "'t': toggle mode <scan/test>", 'cyan'))
+        self.screen_show(colored(
+                "        'r': restart, 'q': quit, "
+                "'s': toggle order <random/normal>", 'cyan'))
         self.screen_show('')
 
     def new_page(self):
@@ -141,7 +137,8 @@ class ListPlayer(object):
         while True:
             pressed_key = readchar.readkey()
             if pressed_key not in COMMANDS:
-                logging.warn("key '%s' can not be recognized" % repr(pressed_key))
+                logging.warn("key '%s' can not be recognized" %
+                             repr(pressed_key))
                 continue
             # else
             cmd = COMMANDS[pressed_key]
@@ -172,5 +169,3 @@ class ListPlayer(object):
                 self.shuffle = not self.shuffle
                 logging.info("word order: %s" % self.get_order())
                 self.start()
-
-

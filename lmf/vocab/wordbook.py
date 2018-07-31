@@ -19,10 +19,8 @@ DUMP_SUFFIX = '.dump'
 BOOK_STRUCTURE_FNAME = 'book_structure.txt'
 
 
-# get last modified time of file
-get_file_mtime = lambda x: os.stat(x).st_mtime
 def not_modified(old_fname, new_fname):
-    return get_file_mtime(old_fname) < get_file_mtime(new_fname)
+    return os.stat(old_fname).st_mtime < os.stat(new_fname).st_mtime
 
 
 class WordBook(object):
@@ -44,8 +42,10 @@ class WordBook(object):
         self.wordlists = list()
         self.wordlist_dict = dict()
         # using book-structure to load wordlists
-        with codecs.open(os.path.join(self.book_dir, BOOK_STRUCTURE_FNAME), 'r', 'utf-8') as fin:
-            structures = list(map(lambda x: x.strip().split(' '), fin.readlines()))
+        with codecs.open(os.path.join(self.book_dir, BOOK_STRUCTURE_FNAME),
+                         'r', 'utf-8') as fin:
+            structures = list(map(lambda x: x.strip().split(' '),
+                                  fin.readlines()))
         for name, fname in structures:
             self.wordlists.append(name)
             self.wordlist_dict[name] = self.load_wordlist(name, fname)
@@ -61,14 +61,16 @@ class WordBook(object):
     def load_wordlist(self, name, fname):
         wordlist_fname = os.path.join(self.book_dir, fname)
         dump_fname = os.path.join(self.dump_dir, fname + DUMP_SUFFIX)
-        if os.path.exists(dump_fname) and not_modified(wordlist_fname, dump_fname):
+        if os.path.exists(dump_fname) and \
+                not_modified(wordlist_fname, dump_fname):
             # load from cache
             with open(dump_fname, 'rb') as pickle_file:
                 wordlist = pickle.load(pickle_file)
         else:
             # load from original file and dump
             if os.path.exists(dump_fname):
-                logging.info("[parsing] File modification detected, re-parse '%s'" % wordlist_fname)
+                logging.info("[parsing] File modification detected, "
+                             "re-parse '%s'" % wordlist_fname)
             else:
                 logging.info("[parsing] '%s'" % wordlist_fname)
             wordlist = WordList(name, wordlist_fname)
@@ -79,7 +81,3 @@ class WordBook(object):
                 pickle.dump(wordlist, pickle_file)
         logging.info("[loaded] WordList '%s'" % name)
         return wordlist
-
-
-
-

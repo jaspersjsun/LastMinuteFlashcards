@@ -15,15 +15,20 @@ import argparse
 LOG_PATH = '../log/'
 LOG_FORMAT = '%(filename)s [%(asctime)s] [%(levelname)s] %(message)s'
 
-BOOK_HOME = '../vocab'      # directory to store all the books
-SELECTED_BOOK = 'LastMinuteVocabulary2017'  # selected book for default loading
+# directory to store all the books
+BOOK_HOME = '../vocab'
 
-DUMP_HOME = os.path.join(BOOK_HOME, '.auto_dump')   # directory to store book caches
+# directory to store book caches
+DUMP_HOME = os.path.join(BOOK_HOME, '.auto_dump')
+
+# selected book for default loading
+SELECTED_BOOK = 'LastMinuteVocabulary2017'
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("variable_name", type=str, help="variable name to fetch its value")
+    parser.add_argument("variable_name", type=str,
+                        help="variable name to fetch its value")
     args = parser.parse_args()
 
     print(globals()[args.variable_name])

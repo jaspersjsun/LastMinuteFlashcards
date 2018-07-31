@@ -9,9 +9,11 @@
 from termcolor import colored
 
 
-POS_TAGS = [    # Part-Of-Speech tags
+# Part-Of-Speech tags
+POS_TAGS = [
         'n',
         'adj',
+        'adv',
         'v',
 ]
 
@@ -58,4 +60,3 @@ class Flashcard(object):
     def show(self, screen_show):
         self.show_base(screen_show)
         self.show_definition(screen_show)
-
