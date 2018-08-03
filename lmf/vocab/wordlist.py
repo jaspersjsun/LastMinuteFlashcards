@@ -22,6 +22,8 @@ class WordList(object):
             for line in fin:
                 line = line.strip()
                 if len(line) == 0:
+                    if len(word_strs) == 0:
+                        continue
                     flashcard = Flashcard(word_strs)
                     self.words.append(flashcard.word)
                     self.word_dict[flashcard.word] = flashcard

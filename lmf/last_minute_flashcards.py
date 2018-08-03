@@ -104,7 +104,7 @@ class LastMinuteFlashcards(object):
 
             pressed_key = readchar.readkey()
             if pressed_key not in COMMANDS:
-                logging.warn("key '%s' can not be recognized" %
+                logging.warn("key %s can not be recognized" %
                              repr(pressed_key))
                 continue
             # else

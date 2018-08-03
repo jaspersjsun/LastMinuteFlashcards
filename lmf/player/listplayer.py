@@ -121,7 +121,7 @@ class ListPlayer(object):
             random.shuffle(self.words)
         self.word_num = len(self.words)
         self.reset_word_idx()
-        logging.info("start from begining")
+        logging.info("start from beginning")
         self.next()
 
     def abort(self):
@@ -137,7 +137,7 @@ class ListPlayer(object):
         while True:
             pressed_key = readchar.readkey()
             if pressed_key not in COMMANDS:
-                logging.warn("key '%s' can not be recognized" %
+                logging.warn("key %s can not be recognized" %
                              repr(pressed_key))
                 continue
             # else
