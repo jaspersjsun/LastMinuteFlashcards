@@ -15,6 +15,7 @@ POS_TAGS = [
         'adj',
         'adv',
         'v',
+        'prep',
 ]
 
 
