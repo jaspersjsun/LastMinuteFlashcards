@@ -4,3 +4,6 @@ list03 List03.txt
 list04 List04.txt
 list05 List05.txt
 list06 List06.txt
+list07 List07.txt
+list08 List08.txt
+list09 List09.txt
